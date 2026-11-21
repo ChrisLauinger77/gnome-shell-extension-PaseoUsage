@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="PaseoUsage">
+  <object class="AdwPreferencesPage" id="PaseoUsage_page_general">
+    <property name="name">PaseoUsage_page_general</property>
+    <property name="title" translatable="yes">General</property>
+    <property name="icon-name">preferences-system-symbolic</property>
+    <child>
+      <object class="AdwPreferencesGroup" id="PaseoUsage_group_paseo">
+        <property name="title" translatable="yes">Paseo</property>
+        <property name="description" translatable="yes">The usage is read with "paseo usage --json"</property>
+        <child>
+          <object class="AdwEntryRow" id="PaseoUsage_row_executable">
+            <property name="title" translatable="yes">Paseo executable</property>
+            <property name="tooltip-text" translatable="yes">File and path of the paseo executable, usually '/usr/local/bin/paseo'</property>
+            <property name="show-apply-button">true</property>
+            <child type="suffix">
+              <object class="GtkButton" id="PaseoUsage_button_executableselect">
+                <property name="icon-name">document-open-symbolic</property>
+                <property name="tooltip-text" translatable="yes">Select the paseo executable</property>
+                <property name="valign">center</property>
+                <style>
+                  <class name="flat" />
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow" id="PaseoUsage_row_status">
+            <property name="title" translatable="yes">Status</property>
+            <property name="subtitle-selectable">true</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesGroup" id="PaseoUsage_group_panel">
+        <property name="title" translatable="yes">Panel</property>
+        <property name="description" translatable="yes">Left click shows the usage. Right click also refreshes it when the last refresh is older than one minute. Middle click opens these preferences.</property>
+        <child>
+          <object class="AdwComboRow" id="PaseoUsage_row_paneldisplay">
+            <property name="title" translatable="yes">Panel display</property>
+            <property name="subtitle" translatable="yes">What the panel button shows</property>
+            <property name="model">
+              <object class="GtkStringList">
+                <items>
+                  <item translatable="yes">Icon only</item>
+                  <item translatable="yes">Icon and percentages</item>
+                  <item translatable="yes">Icon, bars and percentages</item>
+                </items>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesGroup" id="PaseoUsage_group_refresh">
+        <property name="title" translatable="yes">Refresh</property>
+        <child>
+          <object class="AdwSpinRow" id="PaseoUsage_row_refreshinterval">
+            <property name="title" translatable="yes">Refresh interval (minutes)</property>
+            <property name="subtitle" translatable="yes">Minutes between automatic refreshes, 0 turns them off</property>
+            <property name="adjustment">
+              <object class="GtkAdjustment">
+                <property name="lower">0</property>
+                <property name="upper">60</property>
+                <property name="value">5</property>
+                <property name="step-increment">1</property>
+                <property name="page-increment">10</property>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesGroup" id="PaseoUsage_group_debug">
+        <property name="title" translatable="yes">Debugging</property>
+        <child>
+          <object class="AdwSwitchRow" id="PaseoUsage_row_logging">
+            <property name="title" translatable="yes">Enable logging</property>
+            <property name="subtitle" translatable="yes">Write debug output to the system journal</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
