@@ -1,0 +1,16 @@
+{
+    "name": "Paseo Usage",
+    "gettext-domain": "PaseoUsage",
+    "description": "Gnome Shell Extension to visualize the plan usage (session and weekly limits, credits) of your coding agents as reported by the Paseo (https://github.com/getpaseo/paseo) command line tool.\nLeft click shows the usage, right click refreshes and shows it, middle click opens the preferences.",
+    "uuid": "PaseoUsage@lauinger-clan.de",
+    "shell-version": ["49", "50", "51"],
+    "url": "https://github.com/ChrisLauinger77/gnome-shell-extension-PaseoUsage",
+    "settings-schema": "org.gnome.shell.extensions.PaseoUsage",
+    "donations": {
+        "github": "ChrisLauinger77",
+        "kofi": "ChrisLauinger77",
+        "paypal": "ChrisLauinger"
+    },
+    "version": 999,
+    "version-name": "51.0.0"
+}
