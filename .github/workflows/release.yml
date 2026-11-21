@@ -1,0 +1,70 @@
+name: Release Extension
+
+on:
+    push:
+        tags:
+            - "v*" # Reacts to v48.1, v49.0, etc.
+    workflow_dispatch:
+        inputs:
+            do_ego_upload:
+                description: "Manual upload to EGO?"
+                type: boolean
+                default: false
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        permissions:
+            # gh release create needs write access; the default token may be read-only
+            contents: write
+        env:
+            # Elegant: We check for manual input OR the tag pattern to decide on EGO upload
+            SHOULD_UPLOAD: ${{ github.event.inputs.do_ego_upload == 'true' || startsWith(github.ref, 'refs/tags/v') }}
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+            - name: Install dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y gnome-shell gnome-shell-extensions gettext zip unzip libglib2.0-dev dbus
+
+            - name: Build extension
+              run: |
+                  set -e
+                  dbus-run-session -- ./paseousage.sh zip
+
+            - name: Verify Build Output
+              run: |
+                  if [ ! -f PaseoUsage@lauinger-clan.de.shell-extension.zip ]; then
+                    echo "Build failed! Extension ZIP file missing."
+                    exit 1
+                  fi
+
+            - name: Upload Build Artifact (Manual Runs)
+              if: github.event_name == 'workflow_dispatch'
+              uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+              with:
+                  name: extension-build
+                  path: ./PaseoUsage@lauinger-clan.de.shell-extension.zip
+
+            - name: Create GitHub Release
+              if: startsWith(github.ref, 'refs/tags/v')
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  # Uses the logic from the release.yml above to generate release notes based on PR labels
+                  gh release create ${{ github.ref_name }} \
+                    --generate-notes \
+                    ./PaseoUsage@lauinger-clan.de.shell-extension.zip
+
+            - name: EGO Upload
+              if: env.SHOULD_UPLOAD == 'true'
+              uses: fire-man-x/gnome-shell-extension-uploader@6e6c1e39b0eafe3269a272b92e0b04b3f7165555 # v2
+              with:
+                  # Using your secret names: EGO_USERNAME and EGO_PASSWORD
+                  gnome_username: ${{ secrets.EGO_USERNAME }}
+                  gnome_password: ${{ secrets.EGO_PASSWORD }}
+                  # Path to your zip created by the shell script
+                  extension_zip_file: ./PaseoUsage@lauinger-clan.de.shell-extension.zip
