@@ -1,0 +1,374 @@
+# German translation for PaseoUsage.
+# This file is distributed under the same license as the PaseoUsage package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PaseoUsage\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-21 16:25+0100\n"
+"PO-Revision-Date: 2026-11-21 16:23+0100\n"
+"Last-Translator: Christian Lauinger <christian@lauinger-clan.de>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.10\n"
+
+#: PaseoUsage@lauinger-clan.de/extension.js:102
+msgid "Check the paseo executable in the preferences."
+msgstr "Überprüfe die paseo-Programmdatei in den Einstellungen."
+
+#: PaseoUsage@lauinger-clan.de/prefs.js:22
+msgid "Checking…"
+msgstr "Wird überprüft …"
+
+#. Translators: %s is the version of the paseo command line tool
+#: PaseoUsage@lauinger-clan.de/prefs.js:27
+#, javascript-format
+msgid "paseo %s found"
+msgstr "paseo %s gefunden"
+
+#: PaseoUsage@lauinger-clan.de/prefs.js:34
+msgid "Not found or not executable"
+msgstr "Nicht gefunden oder nicht ausführbar"
+
+#: PaseoUsage@lauinger-clan.de/prefs.js:35
+msgid "The paseo command failed"
+msgstr "Der paseo-Befehl ist fehlgeschlagen"
+
+#: PaseoUsage@lauinger-clan.de/prefs.js:57
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:19
+msgid "Select the paseo executable"
+msgstr "Paseo-Programmdatei auswählen"
+
+#. Translators: remaining share or amount of a usage limit, e.g. "82% left"
+#: PaseoUsage@lauinger-clan.de/lib/format.js:44
+#: PaseoUsage@lauinger-clan.de/lib/format.js:140
+#, javascript-format
+msgid "%s left"
+msgstr "%s übrig"
+
+#. Translators: short duration in days, e.g. "4d"
+#: PaseoUsage@lauinger-clan.de/lib/format.js:53
+#, javascript-format
+msgid "%dd"
+msgstr "%d T"
+
+#. Translators: short duration in hours, e.g. "16h"
+#: PaseoUsage@lauinger-clan.de/lib/format.js:55
+#, javascript-format
+msgid "%dh"
+msgstr "%d Std"
+
+#. Translators: short duration in minutes, e.g. "17m"
+#: PaseoUsage@lauinger-clan.de/lib/format.js:57
+#, javascript-format
+msgid "%dm"
+msgstr "%d Min"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:74
+msgid "resetting now"
+msgstr "wird jetzt zurückgesetzt"
+
+#. Translators: %s is a short duration, e.g. "resets in 1h 17m"
+#: PaseoUsage@lauinger-clan.de/lib/format.js:77
+#, javascript-format
+msgid "resets in %s"
+msgstr "Zurücksetzung in %s"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:86
+msgid "runs out now"
+msgstr "jetzt aufgebraucht"
+
+#. Translators: %s is a short duration, e.g. "runs out in 3h 5m"
+#: PaseoUsage@lauinger-clan.de/lib/format.js:89
+#, javascript-format
+msgid "runs out in %s"
+msgstr "aufgebraucht in %s"
+
+#. Translators: strftime format of an abbreviated month and day, e.g. "Nov 30"
+#: PaseoUsage@lauinger-clan.de/lib/format.js:107
+#, no-c-format, javascript-format
+msgid "%b %-d"
+msgstr "%-d. %b"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:114
+msgid "just now"
+msgstr "gerade eben"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:118
+#, javascript-format
+msgid "%d minute ago"
+msgid_plural "%d minutes ago"
+msgstr[0] "vor %d Minute"
+msgstr[1] "vor %d Minuten"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:122
+#, javascript-format
+msgid "%d hour ago"
+msgid_plural "%d hours ago"
+msgstr[0] "vor %d Stunde"
+msgstr[1] "vor %d Stunden"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:125
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "vor %d Tag"
+msgstr[1] "vor %d Tagen"
+
+#. Translators: used amount of a limit, e.g. "$3.20 of $10.00 used"
+#: PaseoUsage@lauinger-clan.de/lib/format.js:145
+#, javascript-format
+msgid "%s of %s used"
+msgstr "%s von %s verbraucht"
+
+#. Translators: used amount, e.g. "1.2K used"
+#: PaseoUsage@lauinger-clan.de/lib/format.js:151
+#, javascript-format
+msgid "%s used"
+msgstr "%s verbraucht"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:159
+#: PaseoUsage@lauinger-clan.de/lib/format.js:160
+msgid "Session"
+msgstr "Sitzung"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:161
+msgid "Weekly"
+msgstr "Wöchentlich"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:162
+msgid "Monthly"
+msgstr "Monatlich"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:163
+msgid "Code review"
+msgstr "Code-Review"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:164
+msgid "Credits"
+msgstr "Guthaben"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:165
+msgid "Monthly credits"
+msgstr "Monatliches Guthaben"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:175
+msgid "No quota available"
+msgstr "Kein Kontingent verfügbar"
+
+#. Translators: %s is a command, e.g. "claude /login"
+#: PaseoUsage@lauinger-clan.de/lib/format.js:179
+#, javascript-format
+msgid "Run %s to refresh it."
+msgstr "Führe %s aus, um sie zu erneuern."
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:180
+msgid "Sign in again."
+msgstr "Melde dich erneut an."
+
+#. Translators: %s are an HTTP status code and a remedy sentence
+#: PaseoUsage@lauinger-clan.de/lib/format.js:183
+#, javascript-format
+msgid "Login rejected (HTTP %s). %s"
+msgstr "Anmeldung abgelehnt (HTTP %s). %s"
+
+#. Translators: %s is a remedy sentence
+#: PaseoUsage@lauinger-clan.de/lib/format.js:189
+#, javascript-format
+msgid "Login expired. %s"
+msgstr "Anmeldung abgelaufen. %s"
+
+#. Translators: %s are a relative time ("5 minutes ago") and a remedy sentence
+#: PaseoUsage@lauinger-clan.de/lib/format.js:192
+#, javascript-format
+msgid "Login expired %s. %s"
+msgstr "Anmeldung %s abgelaufen. %s"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:194
+msgid "Usage is unavailable"
+msgstr "Nutzung ist nicht verfügbar"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:211
+msgid "Unknown error"
+msgstr "Unbekannter Fehler"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:238
+#, javascript-format
+msgid "Paseo executable not found or not executable: %s"
+msgstr "Paseo-Programmdatei nicht gefunden oder nicht ausführbar: %s"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:241
+#, javascript-format
+msgid "paseo did not respond within %d seconds"
+msgstr "paseo hat nicht innerhalb von %d Sekunden geantwortet"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:244
+msgid "Unexpected output from paseo"
+msgstr "Unerwartete Ausgabe von paseo"
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:247
+#, javascript-format
+msgid "paseo exited with status %d"
+msgstr "paseo wurde mit Status %d beendet"
+
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:24
+msgid "Paseo Usage"
+msgstr "Paseo-Nutzung"
+
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:188
+msgid "Loading usage…"
+msgstr "Nutzung wird geladen …"
+
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:188
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:193
+msgid "No usage data"
+msgstr "Keine Nutzungsdaten"
+
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:142
+msgid "Usage"
+msgstr "Nutzung"
+
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:150
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:59
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:160
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:171
+msgid "Refreshing…"
+msgstr "Wird aktualisiert …"
+
+#. Translators: %s is a relative time, e.g. "5 minutes ago"
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:174
+#, javascript-format
+msgid "Last refresh: %s"
+msgstr "Letzte Aktualisierung: %s"
+
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:176
+msgid "No successful refresh"
+msgstr "Keine erfolgreiche Aktualisierung"
+
+#. Translators: %s is a relative time, e.g. "2 hours ago"
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:237
+#, javascript-format
+msgid "Updated %s"
+msgstr "Aktualisiert %s"
+
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:6
+msgid "Path to executable"
+msgstr "Pfad zur Programmdatei"
+
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:7
+msgid "File and path of the paseo executable"
+msgstr "Datei und Pfad der paseo-Programmdatei"
+
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:12
+msgid "Refresh interval"
+msgstr "Aktualisierungsintervall"
+
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:13
+msgid ""
+"Minutes between automatic usage refreshes. 0 turns automatic refreshes off."
+msgstr ""
+"Minuten zwischen automatischen Aktualisierungen der Nutzung. 0 schaltet die "
+"automatische Aktualisierung aus."
+
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:22
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:42
+msgid "Panel display"
+msgstr "Anzeige im Panel"
+
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:23
+msgid ""
+"What the panel button shows: only the icon, the icon with the summary "
+"percentages, or the icon with small bars and percentages"
+msgstr ""
+"Was der Panel-Knopf anzeigt: nur das Symbol, das Symbol mit den "
+"Prozentwerten der Zusammenfassung oder das Symbol mit kleinen Balken und "
+"Prozentwerten"
+
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:27
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:82
+msgid "Enable logging"
+msgstr "Protokollierung aktivieren"
+
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:28
+msgid "Write debug output of the extension to the system journal"
+msgstr "Debug-Ausgaben der Erweiterung in das Systemjournal schreiben"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:5
+msgid "General"
+msgstr "Allgemein"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:9
+msgid "Paseo"
+msgstr "Paseo"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:10
+msgid "The usage is read with \"paseo usage --json\""
+msgstr "Die Nutzung wird mit „paseo usage --json“ gelesen"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:13
+msgid "Paseo executable"
+msgstr "Paseo-Programmdatei"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:14
+msgid "File and path of the paseo executable, usually '/usr/local/bin/paseo'"
+msgstr ""
+"Datei und Pfad der paseo-Programmdatei, normalerweise '/usr/local/bin/paseo'"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:30
+msgid "Status"
+msgstr "Status"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:38
+msgid "Panel"
+msgstr "Panel"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:39
+msgid ""
+"Left click shows the usage. Right click also refreshes it when the last "
+"refresh is older than one minute. Middle click opens these preferences."
+msgstr ""
+"Linksklick zeigt die Nutzung. Rechtsklick aktualisiert sie zusätzlich, wenn "
+"die letzte Aktualisierung älter als eine Minute ist. Mittelklick öffnet "
+"diese Einstellungen."
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:43
+msgid "What the panel button shows"
+msgstr "Was der Panel-Knopf anzeigt"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:47
+msgid "Icon only"
+msgstr "Nur Symbol"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:48
+msgid "Icon and percentages"
+msgstr "Symbol und Prozentwerte"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:49
+msgid "Icon, bars and percentages"
+msgstr "Symbol, Balken und Prozentwerte"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:62
+msgid "Refresh interval (minutes)"
+msgstr "Aktualisierungsintervall (Minuten)"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:63
+msgid "Minutes between automatic refreshes, 0 turns them off"
+msgstr "Minuten zwischen automatischen Aktualisierungen, 0 schaltet sie aus"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:79
+msgid "Debugging"
+msgstr "Fehlersuche"
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:83
+msgid "Write debug output to the system journal"
+msgstr "Debug-Ausgaben in das Systemjournal schreiben"
