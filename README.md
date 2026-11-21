@@ -14,10 +14,24 @@ Gnome Shell Extension to visualize the plan usage of your coding agents as repor
 - Shows when the usage was last refreshed successfully.
 - Refreshes automatically in a configurable interval (0 – 60 minutes, 0 turns it off).
 - Mouse buttons on the panel button:
-  - Left click: show the usage.
-  - Right click: refresh the usage (when the last refresh is older than one minute) and show it.
-  - Middle click: open the preferences.
+    - Left click: show the usage.
+    - Right click: refresh the usage (when the last refresh is older than one minute) and show it.
+    - Middle click: open the preferences.
 - `paseo` is always called asynchronously, GNOME Shell never blocks while waiting for it.
+
+<p align="left">
+  <a href="https://extensions.gnome.org/extension/11891/paseo-usage/">
+    <img alt="Get it on GNOME Extensions" width="228" src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true"/>
+  </a>
+</p>
+
+## Screenshots
+
+#### Icon and Settings
+
+![screenshot: icon](docs/icon.png)
+
+![screenshot: settings](docs/screenshot.png)
 
 # Requirements
 
