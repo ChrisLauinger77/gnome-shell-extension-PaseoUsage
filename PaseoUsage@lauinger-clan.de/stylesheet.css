@@ -1,0 +1,171 @@
+/* Panel button */
+.paseo-usage-panel-summary {
+    spacing: 10px;
+    padding-left: 6px;
+}
+
+.paseo-usage-panel-group {
+    spacing: 4px;
+}
+
+.paseo-usage-panel-provider-icon {
+    icon-size: 14px;
+}
+
+.paseo-usage-panel-label {
+    font-feature-settings: "tnum";
+}
+
+.paseo-usage-panel-label.paseo-usage-tone-warning,
+.paseo-usage-panel-icon.paseo-usage-panel-error {
+    color: #ffa348;
+}
+
+.paseo-usage-panel-label.paseo-usage-tone-danger {
+    color: #f66151;
+}
+
+/* Usage bars (BarLevel needs every -barlevel-* property, otherwise it draws nothing) */
+.paseo-usage-bar,
+.paseo-usage-panel-bar {
+    -barlevel-height: 6px;
+    -barlevel-background-color: rgba(127, 127, 127, 0.3);
+    -barlevel-active-background-color: -st-accent-color;
+    -barlevel-overdrive-color: #f66151;
+    -barlevel-overdrive-separator-width: 0px;
+}
+
+.paseo-usage-bar {
+    margin: 4px 0;
+}
+
+.paseo-usage-panel-bar {
+    -barlevel-height: 4px;
+    min-width: 24px;
+}
+
+.paseo-usage-bar.paseo-usage-tone-ok,
+.paseo-usage-panel-bar.paseo-usage-tone-ok {
+    -barlevel-active-background-color: #33d17a;
+}
+
+.paseo-usage-bar.paseo-usage-tone-warning,
+.paseo-usage-panel-bar.paseo-usage-tone-warning {
+    -barlevel-active-background-color: #ffa348;
+}
+
+.paseo-usage-bar.paseo-usage-tone-danger,
+.paseo-usage-panel-bar.paseo-usage-tone-danger {
+    -barlevel-active-background-color: #f66151;
+}
+
+/* Popup header */
+.paseo-usage-header {
+    spacing: 6px;
+}
+
+.paseo-usage-title {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.paseo-usage-subtitle {
+    font-size: 0.85em;
+    color: rgba(127, 127, 127, 1);
+}
+
+.paseo-usage-header-button {
+    padding: 6px;
+}
+
+.paseo-usage-header-button StIcon {
+    icon-size: 16px;
+}
+
+/* Provider cards */
+.paseo-usage-card-item {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.paseo-usage-card {
+    width: 360px;
+    spacing: 8px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(127, 127, 127, 0.25);
+    background-color: rgba(127, 127, 127, 0.08);
+}
+
+.paseo-usage-card-title {
+    spacing: 8px;
+}
+
+.paseo-usage-provider-icon {
+    icon-size: 16px;
+}
+
+.paseo-usage-provider-name {
+    font-weight: bold;
+}
+
+.paseo-usage-plan {
+    font-size: 0.8em;
+    padding: 1px 7px;
+    border-radius: 6px;
+    background-color: rgba(127, 127, 127, 0.25);
+}
+
+.paseo-usage-window {
+    spacing: 0;
+}
+
+.paseo-usage-window-label,
+.paseo-usage-window-value,
+.paseo-usage-detail-label,
+.paseo-usage-detail-value {
+    font-size: 0.9em;
+}
+
+.paseo-usage-window-value,
+.paseo-usage-balance-value {
+    font-feature-settings: "tnum";
+}
+
+.paseo-usage-balance-label {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.paseo-usage-balance-value {
+    font-size: 0.9em;
+}
+
+.paseo-usage-caption,
+.paseo-usage-account {
+    font-size: 0.8em;
+    color: rgba(127, 127, 127, 1);
+}
+
+.paseo-usage-problem,
+.paseo-usage-message {
+    font-size: 0.9em;
+}
+
+.paseo-usage-message {
+    width: 360px;
+}
+
+.paseo-usage-problem.paseo-usage-tone-warning,
+.paseo-usage-message.paseo-usage-tone-warning,
+.paseo-usage-balance-value.paseo-usage-tone-warning,
+.paseo-usage-detail-value.paseo-usage-tone-warning {
+    color: #ffa348;
+}
+
+.paseo-usage-problem.paseo-usage-tone-danger,
+.paseo-usage-message.paseo-usage-tone-danger,
+.paseo-usage-balance-value.paseo-usage-tone-danger,
+.paseo-usage-detail-value.paseo-usage-tone-danger {
+    color: #f66151;
+}
