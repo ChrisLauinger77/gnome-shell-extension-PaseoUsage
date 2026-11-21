@@ -1,0 +1,31 @@
+<schemalist>
+  <schema id="org.gnome.shell.extensions.PaseoUsage"
+    path="/org/gnome/shell/extensions/PaseoUsage/">
+    <key name="paseo-executable" type="s">
+      <default>'/usr/local/bin/paseo'</default>
+      <summary>Path to executable</summary>
+      <description>File and path of the paseo executable</description>
+    </key>
+    <key name="refresh-interval" type="i">
+      <range min="0" max="60"/>
+      <default>5</default>
+      <summary>Refresh interval</summary>
+      <description>Minutes between automatic usage refreshes. 0 turns automatic refreshes off.</description>
+    </key>
+    <key name="panel-display" type="s">
+      <choices>
+        <choice value="icon"/>
+        <choice value="percent"/>
+        <choice value="bars"/>
+      </choices>
+      <default>'percent'</default>
+      <summary>Panel display</summary>
+      <description>What the panel button shows: only the icon, the icon with the summary percentages, or the icon with small bars and percentages</description>
+    </key>
+    <key name="use-logging" type="b">
+      <default>false</default>
+      <summary>Enable logging</summary>
+      <description>Write debug output of the extension to the system journal</description>
+    </key>
+  </schema>
+</schemalist>
