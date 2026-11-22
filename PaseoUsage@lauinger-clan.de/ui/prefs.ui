@@ -52,6 +52,21 @@
             </property>
           </object>
         </child>
+        <child>
+          <object class="AdwComboRow" id="PaseoUsage_row_panelposition">
+            <property name="title" translatable="yes">Panel position</property>
+            <property name="subtitle" translatable="yes">Where the panel button is placed in the top panel</property>
+            <property name="model">
+              <object class="GtkStringList">
+                <items>
+                  <item translatable="yes">Left</item>
+                  <item translatable="yes">Center</item>
+                  <item translatable="yes">Right</item>
+                </items>
+              </object>
+            </property>
+          </object>
+        </child>
       </object>
     </child>
     <child>

@@ -1,5 +1,6 @@
 "use strict";
 
+import Clutter from "gi://Clutter";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
@@ -12,6 +13,15 @@ import { fetchUsage, isCancelledError, PaseoErrorCode } from "./lib/paseoClient.
 
 // A right click only refreshes when the last successful refresh is older than this.
 const STALE_AFTER_MS = 60 * 1000;
+
+// Index of the panel button in each panel box: after the Activities button in the
+// left box, before the clock in the center box, before the system menu in the right
+// box (an index of -1 appends to the box).
+const PANEL_BOX_INDEX = { left: -1, center: 0, right: 0 };
+
+// `panel-position` is the physical side. GNOME Shell shows the left box on the right
+// in right-to-left sessions, so the side boxes swap there.
+const RTL_BOXES = { left: "right", center: "center", right: "left" };
 
 export default class PaseoUsage extends Extension {
     _logOutput(text) {
@@ -116,6 +126,35 @@ export default class PaseoUsage extends Extension {
         });
     }
 
+    _panelBox() {
+        // Until a position is chosen, keep GNOME Shell's default box for indicators (next
+        // to the system menu, on the left in right-to-left sessions), like before the
+        // setting existed.
+        if (this._settings.get_user_value("panel-position") === null) {
+            return "right";
+        }
+        const side = this._settings.get_string("panel-position");
+        const box = Main.panel.get_text_direction() === Clutter.TextDirection.RTL ? RTL_BOXES[side] : side;
+        return box in PANEL_BOX_INDEX ? box : "right";
+    }
+
+    _addIndicator() {
+        const box = this._panelBox();
+        this._indicator = new PaseoUsageIndicator(this, this._settings);
+        Main.panel.addToStatusArea(this.uuid, this._indicator, PANEL_BOX_INDEX[box], box);
+        if (box === "center") {
+            this._indicator.fitCenterBox();
+        }
+    }
+
+    // Destroying the indicator also removes it from Main.panel.statusArea, so it can
+    // be added again right away in the new panel box.
+    _moveIndicator() {
+        this._indicator.destroy();
+        this._addIndicator();
+        this._setState({});
+    }
+
     _startRefreshTimer() {
         this._stopRefreshTimer();
         const minutes = this._settings.get_int("refresh-interval");
@@ -146,13 +185,13 @@ export default class PaseoUsage extends Extension {
         this._refreshTimerId = 0;
         this._state = { entries: null, error: null, refreshing: false, lastSuccess: 0 };
 
-        this._indicator = new PaseoUsageIndicator(this, this._settings);
-        Main.panel.addToStatusArea(this.uuid, this._indicator);
+        this._addIndicator();
 
         const settingsToMonitor = [
             { key: "paseo-executable", callback: () => this.refresh({ force: false }) },
             { key: "refresh-interval", callback: () => this._startRefreshTimer() },
             { key: "panel-display", callback: () => this._indicator.updatePanel() },
+            { key: "panel-position", callback: () => this._moveIndicator() },
             {
                 key: "use-logging",
                 callback: () => {

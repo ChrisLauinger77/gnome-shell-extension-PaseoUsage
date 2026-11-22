@@ -53,6 +53,9 @@ list.
 - `.github/workflows/eslint.yml`: CI version consistency check, ESLint scan,
   and Shexli scan.
 - `.github/workflows/release.yml`: release packaging and EGO upload workflow.
+- `tests/`: runtime tests run by `./paseousage.sh test`: `shell/` holds the
+  GNOME Shell suites (an `--automation-script`), `prefs/` the preferences test,
+  `fake-paseo.sh` a fake paseo with synthetic data and `run.sh` the runner.
 
 ## Useful Commands
 
@@ -64,6 +67,7 @@ npm run lint
 ./paseousage.sh zip
 ./paseousage.sh install
 ./paseousage.sh translate
+./paseousage.sh test
 ./paseousage.sh check-version
 ./paseousage.sh update-version
 ./paseousage.sh setup-hooks
@@ -92,8 +96,16 @@ Notes:
 - `./paseousage.sh cleanup` removes the generated extension zip.
 - `./paseousage.sh upload` uploads to extensions.gnome.org with the
   maintainer's local credentials. Do not run it from an agent.
-- There is currently no real test suite. `npm test` intentionally exits with an
-  error.
+- `./paseousage.sh test` runs `tests/run.sh`: four GNOME Shell suites in
+  headless nested sessions (`main` 1024 px, `narrow` 800 px with a wide clock
+  and extra indicators, `monitors` with a primary monitor switch, `rtl` with
+  `CLUTTER_TEXT_DIRECTION=rtl`) and the real `prefs.js` with in-memory and
+  locked settings. It packs into a temporary directory and uses in-memory
+  GSettings and private D-Bus sessions, so it never touches the user's
+  settings, extensions, session or the zip in the repository root. A suite
+  fails on any failed check and on JS errors in the shell log. It needs GNOME
+  Shell 49+ with `--headless`, and a display for the preferences test. CI
+  cannot run it, so `npm test` still intentionally exits with an error.
 
 ## Code Style
 
@@ -147,6 +159,25 @@ Notes:
     the primary button). GNOME 49 has no such gesture and toggles the menu in
     `vfunc_event`, which the indicator filters. Do not chain up to
     `vfunc_event` on GNOME 50+, it is not implemented there and throws.
+- Changing `panel-position` (`left`/`center`/`right`) destroys the indicator
+  and adds a new one with `Main.panel.addToStatusArea()`, then renders the
+  current state. The value is the physical side: GNOME Shell shows the left
+  box on the right in right-to-left sessions, so `extension.js` swaps the side
+  boxes when `Main.panel` is RTL. Do this in the shell, not in `prefs.js`:
+  GTK's and Clutter's text direction can differ. While the key has no user
+  value, the indicator stays in GNOME Shell's default right box (as before the
+  setting existed, so upgrades do not move it in RTL sessions); `prefs.js`
+  shows that as Left in RTL and Right otherwise, without writing the key.
+- The panel gives the center box its full preferred width and only the rest
+  to the side boxes, where Clutter still gives every child its minimum width.
+  In the center box (`fitCenterBox()`) the indicator therefore only asks for
+  the width the side boxes and the other center items leave free (mirroring
+  `Panel.vfunc_allocate`), never less than its icon. Clutter caches size
+  requests, so it queues a relayout on `queue-relayout` of the panel boxes,
+  `monitors-changed` and `workareas-changed`.
+- The panel summary (`PanelSummary`) can shrink to nothing and lays out the
+  provider groups only whole: groups that do not fit get zero width and are
+  clipped, so a bar never shows without its label.
 - On a failed refresh the previous data is kept and an error banner is shown.
   Reports with `status` `unavailable`/`error` fall back to `lastSuccessful`,
   like the Paseo app.
@@ -187,6 +218,8 @@ Before finishing changes, run the validations that match the edit:
 - Schema, metadata, packaging, icon, UI, or translation changes:
   `./paseousage.sh zip`.
 - User-visible strings: `./paseousage.sh translate`.
+- Panel button, layout, placement, lifecycle or preferences changes:
+  `./paseousage.sh test`. Extend the suites in `tests/` for new behavior.
 - Runtime behavior: load the extension in GNOME Shell and check the panel
   label in all display modes, left/right/middle clicks, the popup, and the
   preferences window.
@@ -230,8 +263,8 @@ journalctl -f -o cat /usr/bin/gnome-shell
 ## Agent-Specific Cautions
 
 - Do not assume a Paseo daemon or GNOME Shell session is available in the
-  coding environment. Prefer linting and packaging checks when runtime testing
-  is not possible.
+  coding environment. Prefer linting, packaging and `./paseousage.sh test`
+  when testing in a real session is not possible.
 - Use `$review-gnome-shell-extension` when changing runtime, preferences,
   metadata, schema, packaging, or user-data behavior that may affect
   extensions.gnome.org review.

@@ -6,6 +6,7 @@ import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import St from "gi://St";
 
+import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as PanelMenu from "resource:///org/gnome/shell/ui/panelMenu.js";
 import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
@@ -15,6 +16,46 @@ import { MessageItem, ProviderCard, ProviderIcon, UsageHeaderItem, createUsageBa
 
 // Relative times ("5 minutes ago", "resets in 1h 17m") are refreshed this often while the popup is open.
 const TICK_SECONDS = 60;
+
+// The provider groups of the panel summary, laid out only as a whole: when the panel
+// box gives the summary less than its preferred width, the groups that do not fit
+// completely are hidden (zero width, clipped) instead of being cut, so a bar never
+// shows without its percentage. The summary can shrink to nothing.
+const PanelSummary = GObject.registerClass(
+    // The matching class name is intentional for GObject registration.
+    // eslint-disable-next-line no-shadow
+    class PanelSummary extends St.BoxLayout {
+        vfunc_get_preferred_width(forHeight) {
+            const [, natWidth] = super.vfunc_get_preferred_width(forHeight);
+            return [0, natWidth];
+        }
+
+        vfunc_allocate(box) {
+            this.set_allocation(box);
+            const content = this.get_theme_node().get_content_box(box);
+            const height = content.get_height();
+            const spacing = this.layout_manager.spacing;
+            const rtl = this.get_text_direction() === Clutter.TextDirection.RTL;
+            let offset = 0;
+            let fits = true;
+            for (const child of this.get_children()) {
+                const [, width] = child.get_preferred_width(height);
+                // Keep the order: after the first group that does not fit, hide the rest.
+                fits &&= offset + width <= content.get_width() + 0.5;
+                const childBox = new Clutter.ActorBox();
+                if (fits) {
+                    childBox.set_origin(rtl ? content.x2 - offset - width : content.x1 + offset, content.y1);
+                    childBox.set_size(width, height);
+                    offset += width + spacing;
+                } else {
+                    childBox.set_origin(rtl ? content.x2 : content.x1, content.y1);
+                    childBox.set_size(0, height);
+                }
+                child.allocate(childBox);
+            }
+        }
+    }
+);
 
 export const PaseoUsageIndicator = GObject.registerClass(
     // The matching class name is intentional for GObject registration.
@@ -26,8 +67,13 @@ export const PaseoUsageIndicator = GObject.registerClass(
             this._settings = settings;
             this._state = { entries: null, error: null, refreshing: false, lastSuccess: 0 };
             this._tickId = 0;
+            this._fitCenterBox = false;
 
-            const box = new St.BoxLayout({ style_class: "panel-status-menu-box paseo-usage-panel-box" });
+            // Clipped, in case the panel box cannot even fit the icon.
+            const box = new St.BoxLayout({
+                style_class: "panel-status-menu-box paseo-usage-panel-box",
+                clip_to_allocation: true,
+            });
             this._icon = new St.Icon({
                 gicon: new Gio.FileIcon({
                     file: extension.dir.resolve_relative_path("icons/paseo-usage-symbolic.svg"),
@@ -35,7 +81,7 @@ export const PaseoUsageIndicator = GObject.registerClass(
                 style_class: "system-status-icon paseo-usage-panel-icon",
             });
             box.add_child(this._icon);
-            this._summary = new St.BoxLayout({ style_class: "paseo-usage-panel-summary", visible: false });
+            this._summary = new PanelSummary({ style_class: "paseo-usage-panel-summary", visible: false });
             box.add_child(this._summary);
             this.add_child(box);
 
@@ -71,6 +117,61 @@ export const PaseoUsageIndicator = GObject.registerClass(
         destroy() {
             this._stopTick();
             super.destroy();
+        }
+
+        // Call after adding the button to the center box of the panel. The panel gives the
+        // center box its full preferred width and only the rest to the side boxes, where
+        // Clutter still gives every child its minimum width: a wide button there could
+        // push Quick Settings off the screen. So the button only asks for the space that
+        // the side boxes and the other center items leave free.
+        fitCenterBox() {
+            this._fitCenterBox = true;
+            // Clutter caches size requests: ask again whenever the free space can change.
+            // The handlers are disconnected when the button is destroyed.
+            const panelBoxes = this.container.get_parent().get_parent().get_children();
+            for (const panelBox of panelBoxes) {
+                panelBox.connectObject("queue-relayout", () => this.queue_relayout(), this);
+            }
+            Main.layoutManager.connectObject("monitors-changed", () => this.queue_relayout(), this);
+            global.display.connectObject("workareas-changed", () => this.queue_relayout(), this);
+            this.queue_relayout();
+        }
+
+        vfunc_get_preferred_width(forHeight) {
+            const [minWidth, natWidth] = super.vfunc_get_preferred_width(forHeight);
+            if (!this._fitCenterBox) {
+                return [minWidth, natWidth];
+            }
+            // The minimum keeps the icon visible.
+            return [minWidth, Math.max(minWidth, Math.min(natWidth, this._freeCenterWidth()))];
+        }
+
+        // Mirrors Panel.vfunc_allocate: each side box gets
+        // (panel width - center box width + work area offset) / 2.
+        _freeCenterWidth() {
+            const centerBox = this.container.get_parent();
+            const panel = centerBox?.get_parent();
+            const monitor = Main.layoutManager.primaryMonitor;
+            if (!panel || !monitor) {
+                return Infinity;
+            }
+            const workArea = Main.layoutManager.getWorkAreaForMonitor(Main.layoutManager.primaryIndex);
+            const centerOffset = 2 * (workArea.x - monitor.x) + workArea.width - monitor.width;
+
+            let sideWidth = 0;
+            for (const panelBox of panel.get_children()) {
+                if (panelBox !== centerBox && panelBox.visible) {
+                    sideWidth = Math.max(sideWidth, panelBox.get_preferred_width(-1)[1]);
+                }
+            }
+            // Not the center box's own size request: that would ask this button again.
+            let centerItems = centerBox.peek_theme_node()?.get_horizontal_padding() ?? 0;
+            for (const child of centerBox.get_children()) {
+                if (child !== this.container && child.visible) {
+                    centerItems += child.get_preferred_width(-1)[1] + centerBox.layout_manager.spacing;
+                }
+            }
+            return Math.floor(monitor.width + centerOffset - 2 * sideWidth - centerItems);
         }
 
         _setupClickGestures() {
@@ -150,7 +251,8 @@ export const PaseoUsageIndicator = GObject.registerClass(
                 return null;
             }
 
-            const group = new St.BoxLayout({ style_class: "paseo-usage-panel-group" });
+            // Clipped: PanelSummary hides a group that does not fit by giving it zero width.
+            const group = new St.BoxLayout({ style_class: "paseo-usage-panel-group", clip_to_allocation: true });
             group.add_child(
                 new ProviderIcon(entry.icon, {
                     style_class: "paseo-usage-panel-provider-icon",

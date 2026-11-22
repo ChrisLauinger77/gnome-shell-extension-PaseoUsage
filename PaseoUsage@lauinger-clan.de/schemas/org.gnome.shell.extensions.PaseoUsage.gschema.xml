@@ -22,6 +22,16 @@
       <summary>Panel display</summary>
       <description>What the panel button shows: only the icon, the icon with the summary percentages, or the icon with small bars and percentages</description>
     </key>
+    <key name="panel-position" type="s">
+      <choices>
+        <choice value="left"/>
+        <choice value="center"/>
+        <choice value="right"/>
+      </choices>
+      <default>'right'</default>
+      <summary>Panel position</summary>
+      <description>Where the panel button is placed: in the left, center or right part of the top panel</description>
+    </key>
     <key name="use-logging" type="b">
       <default>false</default>
       <summary>Enable logging</summary>
