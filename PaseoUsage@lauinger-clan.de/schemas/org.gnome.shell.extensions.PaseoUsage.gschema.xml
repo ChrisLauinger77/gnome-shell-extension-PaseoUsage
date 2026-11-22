@@ -30,7 +30,7 @@
       </choices>
       <default>'right'</default>
       <summary>Panel position</summary>
-      <description>Top panel box of the panel button: left, center or right. Right-to-left languages show the left box on the right and the right box on the left.</description>
+      <description>Where the panel button is placed: in the left, center or right part of the top panel</description>
     </key>
     <key name="use-logging" type="b">
       <default>false</default>

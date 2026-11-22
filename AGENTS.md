@@ -150,12 +150,18 @@ Notes:
 - Changing `panel-position` (`left`/`center`/`right`, the panel box of the
   same name) destroys the indicator and adds a new one in the new
   box with `Main.panel.addToStatusArea()`, then renders the current state.
-  GNOME Shell mirrors the left and right boxes in right-to-left languages, so
-  `prefs.js` maps the "Left"/"Right" rows to the opposite values there.
+  The value is the physical side: GNOME Shell shows the left box on the right
+  in right-to-left sessions, so `extension.js` swaps the side boxes when
+  `Main.panel` is RTL. Do this in the shell, not in `prefs.js`: GTK's and
+  Clutter's text direction can differ.
 - In the center box the indicator caps its preferred width at a third of the
-  panel (`maxWidthFraction`): the panel gives the center box its full preferred
-  width before sizing the side boxes, so an unlimited summary could squeeze
-  Activities and Quick Settings away.
+  primary monitor width (`maxWidthFraction`) and queues a relayout on
+  `monitors-changed` (Clutter caches size requests). The panel gives the
+  center box its full preferred width before sizing the side boxes, so an
+  unlimited summary could squeeze Activities and Quick Settings away.
+- `.paseo-usage-panel-summary` has `min-width: 0` and the panel box clips:
+  a full side box then shrinks the summary instead of letting it overlap the
+  clock (Clutter gives every child at least its minimum width).
 - On a failed refresh the previous data is kept and an error banner is shown.
   Reports with `status` `unavailable`/`error` fall back to `lastSuccessful`,
   like the Paseo app.

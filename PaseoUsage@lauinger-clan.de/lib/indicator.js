@@ -29,9 +29,15 @@ export const PaseoUsageIndicator = GObject.registerClass(
             this._maxWidthFraction = maxWidthFraction;
             this._state = { entries: null, error: null, refreshing: false, lastSuccess: 0 };
             this._tickId = 0;
+            if (maxWidthFraction) {
+                // The limit depends on the primary monitor, which Clutter's cached size
+                // request does not know about. Disconnected when the button is destroyed.
+                Main.layoutManager.connectObject("monitors-changed", () => this.queue_relayout(), this);
+            }
 
             // Clipped: when the button gets less than its preferred width, the labels
-            // ellipsize and bars or icons that still do not fit are cut off.
+            // ellipsize and bars or icons that still do not fit are cut off (the
+            // summary has min-width: 0 in the stylesheet).
             const box = new St.BoxLayout({
                 style_class: "panel-status-menu-box paseo-usage-panel-box",
                 clip_to_allocation: true,

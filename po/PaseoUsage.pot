@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 10:25+0100\n"
+"POT-Creation-Date: 2026-11-22 10:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,29 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: PaseoUsage@lauinger-clan.de/extension.js:116
+#: PaseoUsage@lauinger-clan.de/extension.js:119
 msgid "Check the paseo executable in the preferences."
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:27
+#: PaseoUsage@lauinger-clan.de/prefs.js:25
 msgid "Checking…"
 msgstr ""
 
 #. Translators: %s is the version of the paseo command line tool
-#: PaseoUsage@lauinger-clan.de/prefs.js:32
+#: PaseoUsage@lauinger-clan.de/prefs.js:30
 #, javascript-format
 msgid "paseo %s found"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:39
+#: PaseoUsage@lauinger-clan.de/prefs.js:37
 msgid "Not found or not executable"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:40
+#: PaseoUsage@lauinger-clan.de/prefs.js:38
 msgid "The paseo command failed"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:62
+#: PaseoUsage@lauinger-clan.de/prefs.js:60
 #: PaseoUsage@lauinger-clan.de/ui/prefs.ui:19
 msgid "Select the paseo executable"
 msgstr ""
@@ -221,12 +221,12 @@ msgstr ""
 msgid "Paseo Usage"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:206
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:212
 msgid "Loading usage…"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:206
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:211
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:212
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:217
 msgid "No usage data"
 msgstr ""
 
@@ -298,8 +298,8 @@ msgstr ""
 
 #: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:33
 msgid ""
-"Top panel box of the panel button: left, center or right. Right-to-left "
-"languages show the left box on the right and the right box on the left."
+"Where the panel button is placed: in the left, center or right part of the "
+"top panel"
 msgstr ""
 
 #: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:37

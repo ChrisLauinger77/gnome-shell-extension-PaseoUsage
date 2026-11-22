@@ -1,5 +1,6 @@
 "use strict";
 
+import Clutter from "gi://Clutter";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
@@ -13,20 +14,22 @@ import { fetchUsage, isCancelledError, PaseoErrorCode } from "./lib/paseoClient.
 // A right click only refreshes when the last successful refresh is older than this.
 const STALE_AFTER_MS = 60 * 1000;
 
-// Panel box and index for each `panel-position` value: after the Activities
-// button in the left box, before the clock in the center box, before the system
-// menu in the right box (an index of -1 appends to the box). The values are the
-// panel box names: GNOME Shell shows the left box on the right in right-to-left
-// languages, and the preferences label the choices by the side they appear on.
+// Index of the panel button in each panel box: after the Activities button in the
+// left box, before the clock in the center box, before the system menu in the right
+// box (an index of -1 appends to the box).
 //
 // The panel gives the center box its full preferred width and only the rest to the
 // side boxes, so in the center the button is limited to a third of the panel width
 // to keep Activities and Quick Settings visible. The side boxes are limited anyway.
-const PANEL_POSITIONS = {
-    left: { box: "left", index: -1 },
-    center: { box: "center", index: 0, maxWidthFraction: 1 / 3 },
-    right: { box: "right", index: 0 },
+const PANEL_BOXES = {
+    left: { index: -1 },
+    center: { index: 0, maxWidthFraction: 1 / 3 },
+    right: { index: 0 },
 };
+
+// `panel-position` is the physical side. GNOME Shell shows the left box on the right
+// in right-to-left sessions, so the side boxes swap there.
+const RTL_BOXES = { left: "right", center: "center", right: "left" };
 
 export default class PaseoUsage extends Extension {
     _logOutput(text) {
@@ -132,8 +135,14 @@ export default class PaseoUsage extends Extension {
     }
 
     _addIndicator() {
-        const { box, index, maxWidthFraction } =
-            PANEL_POSITIONS[this._settings.get_string("panel-position")] ?? PANEL_POSITIONS.right;
+        let box = this._settings.get_string("panel-position");
+        if (Main.panel.get_text_direction() === Clutter.TextDirection.RTL) {
+            box = RTL_BOXES[box];
+        }
+        if (!PANEL_BOXES[box]) {
+            box = "right";
+        }
+        const { index, maxWidthFraction } = PANEL_BOXES[box];
         this._indicator = new PaseoUsageIndicator(this, this._settings, { maxWidthFraction });
         Main.panel.addToStatusArea(this.uuid, this._indicator, index, box);
     }

@@ -8,11 +8,9 @@ import { ExtensionPreferences, gettext as _ } from "resource:///org/gnome/Shell/
 import { fetchVersion, isCancelledError, PaseoErrorCode } from "./lib/paseoClient.js";
 
 const PANEL_DISPLAY_MODES = ["icon", "percent", "bars"];
-// `panel-position` values for the "Left", "Center" and "Right" rows. The values are
-// GNOME Shell's panel box names, and the panel mirrors the left and right boxes in
-// right-to-left languages.
-const PANEL_POSITIONS_LTR = ["left", "center", "right"];
-const PANEL_POSITIONS_RTL = ["right", "center", "left"];
+// Physical sides: the extension maps them to the panel boxes, which GNOME Shell
+// mirrors in right-to-left sessions.
+const PANEL_POSITIONS = ["left", "center", "right"];
 
 export default class AdwPrefs extends ExtensionPreferences {
     _setupExecutable(window, builder, settings, cancellable) {
@@ -115,13 +113,7 @@ export default class AdwPrefs extends ExtensionPreferences {
         const settingSignals = [
             this._setupExecutable(window, builder, settings, cancellable),
             this._bindComboRow(builder, settings, "PaseoUsage_row_paneldisplay", "panel-display", PANEL_DISPLAY_MODES),
-            this._bindComboRow(
-                builder,
-                settings,
-                "PaseoUsage_row_panelposition",
-                "panel-position",
-                Gtk.Widget.get_default_direction() === Gtk.TextDirection.RTL ? PANEL_POSITIONS_RTL : PANEL_POSITIONS_LTR
-            ),
+            this._bindComboRow(builder, settings, "PaseoUsage_row_panelposition", "panel-position", PANEL_POSITIONS),
         ];
         settings.bind(
             "refresh-interval",
