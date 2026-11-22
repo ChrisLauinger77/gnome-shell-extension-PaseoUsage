@@ -1,10 +1,7 @@
 /* Panel button */
-/* min-width: 0 lets a full panel box shrink the summary (the panel button clips it)
-   instead of giving it its minimum width and overlapping the neighbouring box. */
 .paseo-usage-panel-summary {
     spacing: 10px;
     padding-left: 6px;
-    min-width: 0;
 }
 
 .paseo-usage-panel-group {

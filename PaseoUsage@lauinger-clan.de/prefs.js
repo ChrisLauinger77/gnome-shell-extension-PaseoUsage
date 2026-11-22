@@ -82,16 +82,22 @@ export default class AdwPrefs extends ExtensionPreferences {
     }
 
     // Syncs a combo row with a string key whose schema choices are `values`, in the
-    // same order as the row items. A locked key makes the row insensitive.
-    _bindComboRow(builder, settings, rowId, key, values) {
+    // same order as the row items. `unsetValue` is shown while the key has no user
+    // value. A locked key makes the row insensitive.
+    _bindComboRow(builder, settings, rowId, key, values, unsetValue = null) {
         const comboRow = builder.get_object(rowId);
+        let syncing = false;
         const syncCombo = () => {
-            comboRow.selected = Math.max(values.indexOf(settings.get_string(key)), 0);
+            const unset = unsetValue !== null && settings.get_user_value(key) === null;
+            syncing = true;
+            comboRow.selected = Math.max(values.indexOf(unset ? unsetValue : settings.get_string(key)), 0);
+            syncing = false;
         };
         settings.bind_writable(key, comboRow, "sensitive", false);
+        // Only a selection by the user is written, also when it matches the stored value.
         comboRow.connect("notify::selected", () => {
             const value = values[comboRow.selected];
-            if (value && value !== settings.get_string(key) && !settings.set_string(key, value)) {
+            if (!syncing && value && !settings.set_string(key, value)) {
                 syncCombo();
             }
         });
@@ -113,7 +119,16 @@ export default class AdwPrefs extends ExtensionPreferences {
         const settingSignals = [
             this._setupExecutable(window, builder, settings, cancellable),
             this._bindComboRow(builder, settings, "PaseoUsage_row_paneldisplay", "panel-display", PANEL_DISPLAY_MODES),
-            this._bindComboRow(builder, settings, "PaseoUsage_row_panelposition", "panel-position", PANEL_POSITIONS),
+            // Until a position is chosen, the extension keeps GNOME Shell's default box,
+            // which is on the left in right-to-left sessions.
+            this._bindComboRow(
+                builder,
+                settings,
+                "PaseoUsage_row_panelposition",
+                "panel-position",
+                PANEL_POSITIONS,
+                Gtk.Widget.get_default_direction() === Gtk.TextDirection.RTL ? "left" : "right"
+            ),
         ];
         settings.bind(
             "refresh-interval",

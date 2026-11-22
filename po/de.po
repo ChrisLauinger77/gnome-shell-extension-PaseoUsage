@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PaseoUsage\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 10:43+0100\n"
+"POT-Creation-Date: 2026-11-22 10:58+0100\n"
 "PO-Revision-Date: 2026-11-21 16:23+0100\n"
 "Last-Translator: Christian Lauinger <christian@lauinger-clan.de>\n"
 "Language-Team: \n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.10\n"
 
-#: PaseoUsage@lauinger-clan.de/extension.js:119
+#: PaseoUsage@lauinger-clan.de/extension.js:111
 msgid "Check the paseo executable in the preferences."
 msgstr "Überprüfe die paseo-Programmdatei in den Einstellungen."
 
@@ -215,16 +215,16 @@ msgstr "Unerwartete Ausgabe von paseo"
 msgid "paseo exited with status %d"
 msgstr "paseo wurde mit Status %d beendet"
 
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:26
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:65
 msgid "Paseo Usage"
 msgstr "Paseo-Nutzung"
 
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:212
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:290
 msgid "Loading usage…"
 msgstr "Nutzung wird geladen …"
 
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:212
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:217
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:290
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:295
 msgid "No usage data"
 msgstr "Keine Nutzungsdaten"
 

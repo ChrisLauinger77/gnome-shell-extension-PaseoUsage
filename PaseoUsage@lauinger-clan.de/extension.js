@@ -17,15 +17,7 @@ const STALE_AFTER_MS = 60 * 1000;
 // Index of the panel button in each panel box: after the Activities button in the
 // left box, before the clock in the center box, before the system menu in the right
 // box (an index of -1 appends to the box).
-//
-// The panel gives the center box its full preferred width and only the rest to the
-// side boxes, so in the center the button is limited to a third of the panel width
-// to keep Activities and Quick Settings visible. The side boxes are limited anyway.
-const PANEL_BOXES = {
-    left: { index: -1 },
-    center: { index: 0, maxWidthFraction: 1 / 3 },
-    right: { index: 0 },
-};
+const PANEL_BOX_INDEX = { left: -1, center: 0, right: 0 };
 
 // `panel-position` is the physical side. GNOME Shell shows the left box on the right
 // in right-to-left sessions, so the side boxes swap there.
@@ -134,17 +126,25 @@ export default class PaseoUsage extends Extension {
         });
     }
 
+    _panelBox() {
+        // Until a position is chosen, keep GNOME Shell's default box for indicators (next
+        // to the system menu, on the left in right-to-left sessions), like before the
+        // setting existed.
+        if (this._settings.get_user_value("panel-position") === null) {
+            return "right";
+        }
+        const side = this._settings.get_string("panel-position");
+        const box = Main.panel.get_text_direction() === Clutter.TextDirection.RTL ? RTL_BOXES[side] : side;
+        return box in PANEL_BOX_INDEX ? box : "right";
+    }
+
     _addIndicator() {
-        let box = this._settings.get_string("panel-position");
-        if (Main.panel.get_text_direction() === Clutter.TextDirection.RTL) {
-            box = RTL_BOXES[box];
+        const box = this._panelBox();
+        this._indicator = new PaseoUsageIndicator(this, this._settings);
+        Main.panel.addToStatusArea(this.uuid, this._indicator, PANEL_BOX_INDEX[box], box);
+        if (box === "center") {
+            this._indicator.fitCenterBox();
         }
-        if (!PANEL_BOXES[box]) {
-            box = "right";
-        }
-        const { index, maxWidthFraction } = PANEL_BOXES[box];
-        this._indicator = new PaseoUsageIndicator(this, this._settings, { maxWidthFraction });
-        Main.panel.addToStatusArea(this.uuid, this._indicator, index, box);
     }
 
     // Destroying the indicator also removes it from Main.panel.statusArea, so it can
