@@ -10,6 +10,7 @@ Gnome Shell Extension to visualize the plan usage of your coding agents as repor
 
 - Shows the summary limits (for example the 5 hour session and the weekly limit) of every provider directly in the panel.
 - Choose the panel display: icon only, icon and percentages, or icon with small bars and percentages.
+- Choose the panel position: left, center or right part of the top panel.
 - The popup shows one card per provider (Claude, Codex, …) with plan, usage bars, reset times, credits and account.
 - Shows when the usage was last refreshed successfully.
 - Refreshes automatically in a configurable interval (0 – 60 minutes, 0 turns it off).

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 16:25+0100\n"
+"POT-Creation-Date: 2026-11-22 10:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,29 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: PaseoUsage@lauinger-clan.de/extension.js:102
+#: PaseoUsage@lauinger-clan.de/extension.js:110
 msgid "Check the paseo executable in the preferences."
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:22
+#: PaseoUsage@lauinger-clan.de/prefs.js:23
 msgid "Checking…"
 msgstr ""
 
 #. Translators: %s is the version of the paseo command line tool
-#: PaseoUsage@lauinger-clan.de/prefs.js:27
+#: PaseoUsage@lauinger-clan.de/prefs.js:28
 #, javascript-format
 msgid "paseo %s found"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:34
+#: PaseoUsage@lauinger-clan.de/prefs.js:35
 msgid "Not found or not executable"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:35
+#: PaseoUsage@lauinger-clan.de/prefs.js:36
 msgid "The paseo command failed"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:57
+#: PaseoUsage@lauinger-clan.de/prefs.js:58
 #: PaseoUsage@lauinger-clan.de/ui/prefs.ui:19
 msgid "Select the paseo executable"
 msgstr ""
@@ -235,7 +235,7 @@ msgid "Usage"
 msgstr ""
 
 #: PaseoUsage@lauinger-clan.de/lib/usageView.js:150
-#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:59
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:74
 msgid "Refresh"
 msgstr ""
 
@@ -291,12 +291,23 @@ msgid ""
 "percentages, or the icon with small bars and percentages"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:27
-#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:82
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:32
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:57
+msgid "Panel position"
+msgstr ""
+
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:33
+msgid ""
+"Where the panel button is placed: in the left, center or right part of the "
+"top panel"
+msgstr ""
+
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:37
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:97
 msgid "Enable logging"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:28
+#: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:38
 msgid "Write debug output of the extension to the system journal"
 msgstr ""
 
@@ -350,18 +361,34 @@ msgstr ""
 msgid "Icon, bars and percentages"
 msgstr ""
 
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:58
+msgid "Where the panel button is placed in the top panel"
+msgstr ""
+
 #: PaseoUsage@lauinger-clan.de/ui/prefs.ui:62
-msgid "Refresh interval (minutes)"
+msgid "Left"
 msgstr ""
 
 #: PaseoUsage@lauinger-clan.de/ui/prefs.ui:63
+msgid "Center"
+msgstr ""
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:64
+msgid "Right"
+msgstr ""
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:77
+msgid "Refresh interval (minutes)"
+msgstr ""
+
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:78
 msgid "Minutes between automatic refreshes, 0 turns them off"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:79
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:94
 msgid "Debugging"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:83
+#: PaseoUsage@lauinger-clan.de/ui/prefs.ui:98
 msgid "Write debug output to the system journal"
 msgstr ""

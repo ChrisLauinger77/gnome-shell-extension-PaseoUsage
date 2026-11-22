@@ -147,6 +147,9 @@ Notes:
     the primary button). GNOME 49 has no such gesture and toggles the menu in
     `vfunc_event`, which the indicator filters. Do not chain up to
     `vfunc_event` on GNOME 50+, it is not implemented there and throws.
+- Changing `panel-position` (`left`/`center`/`right`, the panel box of the
+  same name) destroys the indicator and adds a new one in the new
+  box with `Main.panel.addToStatusArea()`, then renders the current state.
 - On a failed refresh the previous data is kept and an error banner is shown.
   Reports with `status` `unavailable`/`error` fall back to `lastSuccessful`,
   like the Paseo app.

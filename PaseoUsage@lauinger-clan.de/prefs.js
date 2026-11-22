@@ -8,6 +8,7 @@ import { ExtensionPreferences, gettext as _ } from "resource:///org/gnome/Shell/
 import { fetchVersion, isCancelledError, PaseoErrorCode } from "./lib/paseoClient.js";
 
 const PANEL_DISPLAY_MODES = ["icon", "percent", "bars"];
+const PANEL_POSITIONS = ["left", "center", "right"];
 
 export default class AdwPrefs extends ExtensionPreferences {
     _setupExecutable(window, builder, settings, cancellable) {
@@ -78,20 +79,21 @@ export default class AdwPrefs extends ExtensionPreferences {
         return settings.connect("changed::paseo-executable", syncEntry);
     }
 
-    _setupPanelDisplay(builder, settings) {
-        const comboRow = builder.get_object("PaseoUsage_row_paneldisplay");
+    // Syncs a combo row with a string key whose schema choices are `values`, in the
+    // same order as the row items.
+    _bindComboRow(builder, settings, rowId, key, values) {
+        const comboRow = builder.get_object(rowId);
         const syncCombo = () => {
-            const index = PANEL_DISPLAY_MODES.indexOf(settings.get_string("panel-display"));
-            comboRow.selected = index < 0 ? 1 : index;
+            comboRow.selected = Math.max(values.indexOf(settings.get_string(key)), 0);
         };
         comboRow.connect("notify::selected", () => {
-            const mode = PANEL_DISPLAY_MODES[comboRow.selected];
-            if (mode && mode !== settings.get_string("panel-display")) {
-                settings.set_string("panel-display", mode);
+            const value = values[comboRow.selected];
+            if (value && value !== settings.get_string(key)) {
+                settings.set_string(key, value);
             }
         });
         syncCombo();
-        return settings.connect("changed::panel-display", syncCombo);
+        return settings.connect(`changed::${key}`, syncCombo);
     }
 
     fillPreferencesWindow(window) {
@@ -107,7 +109,8 @@ export default class AdwPrefs extends ExtensionPreferences {
 
         const settingSignals = [
             this._setupExecutable(window, builder, settings, cancellable),
-            this._setupPanelDisplay(builder, settings),
+            this._bindComboRow(builder, settings, "PaseoUsage_row_paneldisplay", "panel-display", PANEL_DISPLAY_MODES),
+            this._bindComboRow(builder, settings, "PaseoUsage_row_panelposition", "panel-position", PANEL_POSITIONS),
         ];
         settings.bind(
             "refresh-interval",

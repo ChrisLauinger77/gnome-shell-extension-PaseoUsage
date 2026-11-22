@@ -13,6 +13,15 @@ import { fetchUsage, isCancelledError, PaseoErrorCode } from "./lib/paseoClient.
 // A right click only refreshes when the last successful refresh is older than this.
 const STALE_AFTER_MS = 60 * 1000;
 
+// Panel box and index for each `panel-position` value: after the Activities
+// button on the left, before the clock in the center, before the system menu on
+// the right (an index of -1 appends to the box).
+const PANEL_POSITIONS = {
+    left: { box: "left", index: -1 },
+    center: { box: "center", index: 0 },
+    right: { box: "right", index: 0 },
+};
+
 export default class PaseoUsage extends Extension {
     _logOutput(text) {
         if (this._useLogging) {
@@ -116,6 +125,20 @@ export default class PaseoUsage extends Extension {
         });
     }
 
+    _addIndicator() {
+        const { box, index } = PANEL_POSITIONS[this._settings.get_string("panel-position")] ?? PANEL_POSITIONS.right;
+        this._indicator = new PaseoUsageIndicator(this, this._settings);
+        Main.panel.addToStatusArea(this.uuid, this._indicator, index, box);
+    }
+
+    // Destroying the indicator also removes it from Main.panel.statusArea, so it can
+    // be added again right away in the new panel box.
+    _moveIndicator() {
+        this._indicator.destroy();
+        this._addIndicator();
+        this._setState({});
+    }
+
     _startRefreshTimer() {
         this._stopRefreshTimer();
         const minutes = this._settings.get_int("refresh-interval");
@@ -146,13 +169,13 @@ export default class PaseoUsage extends Extension {
         this._refreshTimerId = 0;
         this._state = { entries: null, error: null, refreshing: false, lastSuccess: 0 };
 
-        this._indicator = new PaseoUsageIndicator(this, this._settings);
-        Main.panel.addToStatusArea(this.uuid, this._indicator);
+        this._addIndicator();
 
         const settingsToMonitor = [
             { key: "paseo-executable", callback: () => this.refresh({ force: false }) },
             { key: "refresh-interval", callback: () => this._startRefreshTimer() },
             { key: "panel-display", callback: () => this._indicator.updatePanel() },
+            { key: "panel-position", callback: () => this._moveIndicator() },
             {
                 key: "use-logging",
                 callback: () => {
