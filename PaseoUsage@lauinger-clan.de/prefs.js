@@ -8,7 +8,11 @@ import { ExtensionPreferences, gettext as _ } from "resource:///org/gnome/Shell/
 import { fetchVersion, isCancelledError, PaseoErrorCode } from "./lib/paseoClient.js";
 
 const PANEL_DISPLAY_MODES = ["icon", "percent", "bars"];
-const PANEL_POSITIONS = ["left", "center", "right"];
+// `panel-position` values for the "Left", "Center" and "Right" rows. The values are
+// GNOME Shell's panel box names, and the panel mirrors the left and right boxes in
+// right-to-left languages.
+const PANEL_POSITIONS_LTR = ["left", "center", "right"];
+const PANEL_POSITIONS_RTL = ["right", "center", "left"];
 
 export default class AdwPrefs extends ExtensionPreferences {
     _setupExecutable(window, builder, settings, cancellable) {
@@ -45,11 +49,11 @@ export default class AdwPrefs extends ExtensionPreferences {
             checkExecutable().catch((error) => console.error(error));
         };
 
+        // Also covers the file chooser button inside the row.
+        settings.bind_writable("paseo-executable", entryRow, "sensitive", false);
         entryRow.connect("apply", () => {
             const path = entryRow.text.trim();
-            if (path) {
-                settings.set_string("paseo-executable", path);
-            } else {
+            if (!path || !settings.set_string("paseo-executable", path)) {
                 syncEntry();
             }
         });
@@ -80,16 +84,17 @@ export default class AdwPrefs extends ExtensionPreferences {
     }
 
     // Syncs a combo row with a string key whose schema choices are `values`, in the
-    // same order as the row items.
+    // same order as the row items. A locked key makes the row insensitive.
     _bindComboRow(builder, settings, rowId, key, values) {
         const comboRow = builder.get_object(rowId);
         const syncCombo = () => {
             comboRow.selected = Math.max(values.indexOf(settings.get_string(key)), 0);
         };
+        settings.bind_writable(key, comboRow, "sensitive", false);
         comboRow.connect("notify::selected", () => {
             const value = values[comboRow.selected];
-            if (value && value !== settings.get_string(key)) {
-                settings.set_string(key, value);
+            if (value && value !== settings.get_string(key) && !settings.set_string(key, value)) {
+                syncCombo();
             }
         });
         syncCombo();
@@ -110,7 +115,13 @@ export default class AdwPrefs extends ExtensionPreferences {
         const settingSignals = [
             this._setupExecutable(window, builder, settings, cancellable),
             this._bindComboRow(builder, settings, "PaseoUsage_row_paneldisplay", "panel-display", PANEL_DISPLAY_MODES),
-            this._bindComboRow(builder, settings, "PaseoUsage_row_panelposition", "panel-position", PANEL_POSITIONS),
+            this._bindComboRow(
+                builder,
+                settings,
+                "PaseoUsage_row_panelposition",
+                "panel-position",
+                Gtk.Widget.get_default_direction() === Gtk.TextDirection.RTL ? PANEL_POSITIONS_RTL : PANEL_POSITIONS_LTR
+            ),
         ];
         settings.bind(
             "refresh-interval",

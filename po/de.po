@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PaseoUsage\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 10:07+0100\n"
+"POT-Creation-Date: 2026-11-22 10:25+0100\n"
 "PO-Revision-Date: 2026-11-21 16:23+0100\n"
 "Last-Translator: Christian Lauinger <christian@lauinger-clan.de>\n"
 "Language-Team: \n"
@@ -16,29 +16,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.10\n"
 
-#: PaseoUsage@lauinger-clan.de/extension.js:110
+#: PaseoUsage@lauinger-clan.de/extension.js:116
 msgid "Check the paseo executable in the preferences."
 msgstr "Überprüfe die paseo-Programmdatei in den Einstellungen."
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:23
+#: PaseoUsage@lauinger-clan.de/prefs.js:27
 msgid "Checking…"
 msgstr "Wird überprüft …"
 
 #. Translators: %s is the version of the paseo command line tool
-#: PaseoUsage@lauinger-clan.de/prefs.js:28
+#: PaseoUsage@lauinger-clan.de/prefs.js:32
 #, javascript-format
 msgid "paseo %s found"
 msgstr "paseo %s gefunden"
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:35
+#: PaseoUsage@lauinger-clan.de/prefs.js:39
 msgid "Not found or not executable"
 msgstr "Nicht gefunden oder nicht ausführbar"
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:36
+#: PaseoUsage@lauinger-clan.de/prefs.js:40
 msgid "The paseo command failed"
 msgstr "Der paseo-Befehl ist fehlgeschlagen"
 
-#: PaseoUsage@lauinger-clan.de/prefs.js:58
+#: PaseoUsage@lauinger-clan.de/prefs.js:62
 #: PaseoUsage@lauinger-clan.de/ui/prefs.ui:19
 msgid "Select the paseo executable"
 msgstr "Paseo-Programmdatei auswählen"
@@ -215,16 +215,16 @@ msgstr "Unerwartete Ausgabe von paseo"
 msgid "paseo exited with status %d"
 msgstr "paseo wurde mit Status %d beendet"
 
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:24
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:26
 msgid "Paseo Usage"
 msgstr "Paseo-Nutzung"
 
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:188
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:206
 msgid "Loading usage…"
 msgstr "Nutzung wird geladen …"
 
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:188
-#: PaseoUsage@lauinger-clan.de/lib/indicator.js:193
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:206
+#: PaseoUsage@lauinger-clan.de/lib/indicator.js:211
 msgid "No usage data"
 msgstr "Keine Nutzungsdaten"
 
@@ -301,11 +301,12 @@ msgstr "Position im Panel"
 
 #: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:33
 msgid ""
-"Where the panel button is placed: in the left, center or right part of the "
-"top panel"
+"Top panel box of the panel button: left, center or right. Right-to-left "
+"languages show the left box on the right and the right box on the left."
 msgstr ""
-"Wo der Panel-Knopf platziert wird: im linken, mittleren oder rechten Teil "
-"des oberen Panels"
+"Bereich des oberen Panels für den Panel-Knopf: links, Mitte oder rechts. "
+"Sprachen mit Schreibrichtung von rechts nach links zeigen den linken Bereich "
+"rechts und den rechten Bereich links."
 
 #: PaseoUsage@lauinger-clan.de/schemas/org.gnome.shell.extensions.PaseoUsage.gschema.xml:37
 #: PaseoUsage@lauinger-clan.de/ui/prefs.ui:97

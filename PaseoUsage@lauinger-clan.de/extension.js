@@ -14,11 +14,17 @@ import { fetchUsage, isCancelledError, PaseoErrorCode } from "./lib/paseoClient.
 const STALE_AFTER_MS = 60 * 1000;
 
 // Panel box and index for each `panel-position` value: after the Activities
-// button on the left, before the clock in the center, before the system menu on
-// the right (an index of -1 appends to the box).
+// button in the left box, before the clock in the center box, before the system
+// menu in the right box (an index of -1 appends to the box). The values are the
+// panel box names: GNOME Shell shows the left box on the right in right-to-left
+// languages, and the preferences label the choices by the side they appear on.
+//
+// The panel gives the center box its full preferred width and only the rest to the
+// side boxes, so in the center the button is limited to a third of the panel width
+// to keep Activities and Quick Settings visible. The side boxes are limited anyway.
 const PANEL_POSITIONS = {
     left: { box: "left", index: -1 },
-    center: { box: "center", index: 0 },
+    center: { box: "center", index: 0, maxWidthFraction: 1 / 3 },
     right: { box: "right", index: 0 },
 };
 
@@ -126,8 +132,9 @@ export default class PaseoUsage extends Extension {
     }
 
     _addIndicator() {
-        const { box, index } = PANEL_POSITIONS[this._settings.get_string("panel-position")] ?? PANEL_POSITIONS.right;
-        this._indicator = new PaseoUsageIndicator(this, this._settings);
+        const { box, index, maxWidthFraction } =
+            PANEL_POSITIONS[this._settings.get_string("panel-position")] ?? PANEL_POSITIONS.right;
+        this._indicator = new PaseoUsageIndicator(this, this._settings, { maxWidthFraction });
         Main.panel.addToStatusArea(this.uuid, this._indicator, index, box);
     }
 

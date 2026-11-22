@@ -150,6 +150,12 @@ Notes:
 - Changing `panel-position` (`left`/`center`/`right`, the panel box of the
   same name) destroys the indicator and adds a new one in the new
   box with `Main.panel.addToStatusArea()`, then renders the current state.
+  GNOME Shell mirrors the left and right boxes in right-to-left languages, so
+  `prefs.js` maps the "Left"/"Right" rows to the opposite values there.
+- In the center box the indicator caps its preferred width at a third of the
+  panel (`maxWidthFraction`): the panel gives the center box its full preferred
+  width before sizing the side boxes, so an unlimited summary could squeeze
+  Activities and Quick Settings away.
 - On a failed refresh the previous data is kept and an error banner is shown.
   Reports with `status` `unavailable`/`error` fall back to `lastSuccessful`,
   like the Paseo app.

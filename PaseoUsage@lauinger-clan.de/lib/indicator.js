@@ -6,6 +6,7 @@ import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import St from "gi://St";
 
+import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as PanelMenu from "resource:///org/gnome/shell/ui/panelMenu.js";
 import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
@@ -20,14 +21,21 @@ export const PaseoUsageIndicator = GObject.registerClass(
     // The matching class name is intentional for GObject registration.
     // eslint-disable-next-line no-shadow
     class PaseoUsageIndicator extends PanelMenu.Button {
-        constructor(extension, settings) {
+        // maxWidthFraction: largest part of the panel width the button may ask for, 0 for no limit.
+        constructor(extension, settings, { maxWidthFraction = 0 } = {}) {
             super(0.5, _("Paseo Usage"));
             this._extension = extension;
             this._settings = settings;
+            this._maxWidthFraction = maxWidthFraction;
             this._state = { entries: null, error: null, refreshing: false, lastSuccess: 0 };
             this._tickId = 0;
 
-            const box = new St.BoxLayout({ style_class: "panel-status-menu-box paseo-usage-panel-box" });
+            // Clipped: when the button gets less than its preferred width, the labels
+            // ellipsize and bars or icons that still do not fit are cut off.
+            const box = new St.BoxLayout({
+                style_class: "panel-status-menu-box paseo-usage-panel-box",
+                clip_to_allocation: true,
+            });
             this._icon = new St.Icon({
                 gicon: new Gio.FileIcon({
                     file: extension.dir.resolve_relative_path("icons/paseo-usage-symbolic.svg"),
@@ -71,6 +79,16 @@ export const PaseoUsageIndicator = GObject.registerClass(
         destroy() {
             this._stopTick();
             super.destroy();
+        }
+
+        vfunc_get_preferred_width(forHeight) {
+            const [minWidth, natWidth] = super.vfunc_get_preferred_width(forHeight);
+            const panelWidth = Main.layoutManager.primaryMonitor?.width ?? 0;
+            if (!this._maxWidthFraction || panelWidth <= 0) {
+                return [minWidth, natWidth];
+            }
+            const maxWidth = Math.floor(panelWidth * this._maxWidthFraction);
+            return [Math.min(minWidth, maxWidth), Math.min(natWidth, maxWidth)];
         }
 
         _setupClickGestures() {
