@@ -2,6 +2,13 @@
 
 // Runs the paseo command line tool asynchronously. Only GLib/Gio are used here so
 // the module works in GNOME Shell, in the preferences process and in plain gjs.
+//
+// The `paseoExecutable` argument of the exported functions is always the value of
+// the `paseo-executable` GSettings key: the path of the Paseo CLI
+// (https://github.com/getpaseo/paseo), `/usr/local/bin/paseo` by default, which
+// the user can change in the preferences. It is started directly as argv[0],
+// without a shell, and only with the fixed argument lists in this file:
+// `usage --json [--refresh]` (fetchUsage) and `--version` (fetchVersion).
 
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
@@ -40,11 +47,13 @@ function _communicate(proc, cancellable) {
     });
 }
 
-export async function runPaseo(executable, args, { cancellable = null, timeoutSeconds = 30, subprocesses = null } = {}) {
+// `cancellable` is required: the extension passes the one it cancels in disable(),
+// the preferences the one they cancel when the window closes.
+async function _runPaseo(paseoExecutable, args, cancellable, { timeoutSeconds = 30, subprocesses = null } = {}) {
     let proc;
     try {
         proc = new Gio.Subprocess({
-            argv: [executable, ...args],
+            argv: [paseoExecutable, ...args],
             flags: Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE,
         });
         proc.init(cancellable);
@@ -59,13 +68,24 @@ export async function runPaseo(executable, args, { cancellable = null, timeoutSe
     // Stop waiting on timeout or outer cancellation even if a grandchild still
     // holds the output pipes open.
     const callCancellable = new Gio.Cancellable();
-    const outerHandlerId = cancellable ? cancellable.connect(() => callCancellable.cancel()) : 0;
     let timedOut = false;
     let timeoutId = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, timeoutSeconds, () => {
         timedOut = true;
         timeoutId = 0;
         callCancellable.cancel();
         return GLib.SOURCE_REMOVE;
+    });
+    const removeTimeout = () => {
+        if (timeoutId) {
+            GLib.Source.remove(timeoutId);
+            timeoutId = 0;
+        }
+    };
+    // Runs synchronously inside cancellable.cancel(), so disable() leaves no
+    // timeout source behind. Runs immediately if it is already cancelled.
+    const cancelHandlerId = cancellable.connect(() => {
+        removeTimeout();
+        callCancellable.cancel();
     });
 
     try {
@@ -81,12 +101,8 @@ export async function runPaseo(executable, args, { cancellable = null, timeoutSe
         }
         throw error;
     } finally {
-        if (timeoutId) {
-            GLib.Source.remove(timeoutId);
-        }
-        if (outerHandlerId) {
-            cancellable.disconnect(outerHandlerId);
-        }
+        removeTimeout();
+        cancellable.disconnect(cancelHandlerId);
         subprocesses?.delete(proc);
     }
 }
@@ -218,12 +234,12 @@ export function normalizeEntry(entry) {
     };
 }
 
-export async function fetchUsage(executable, { refresh = false, ...options } = {}) {
+export async function fetchUsage(paseoExecutable, cancellable, { refresh = false, ...options } = {}) {
     const args = ["usage", "--json"];
     if (refresh) {
         args.push("--refresh");
     }
-    const { exitStatus, stdout, stderr } = await runPaseo(executable, args, options);
+    const { exitStatus, stdout, stderr } = await _runPaseo(paseoExecutable, args, cancellable, options);
     if (exitStatus !== 0) {
         throw new PaseoError(PaseoErrorCode.FAILED, _errorMessage(stderr, stdout), exitStatus);
     }
@@ -240,8 +256,8 @@ export async function fetchUsage(executable, { refresh = false, ...options } = {
     return data.map(normalizeEntry).filter((entry) => entry !== null);
 }
 
-export async function fetchVersion(executable, options = {}) {
-    const { exitStatus, stdout, stderr } = await runPaseo(executable, ["--version"], options);
+export async function fetchVersion(paseoExecutable, cancellable, options = {}) {
+    const { exitStatus, stdout, stderr } = await _runPaseo(paseoExecutable, ["--version"], cancellable, options);
     if (exitStatus !== 0) {
         throw new PaseoError(PaseoErrorCode.FAILED, _errorMessage(stderr, stdout), exitStatus);
     }

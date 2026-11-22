@@ -84,9 +84,8 @@ export default class PaseoUsage extends Extension {
 
         let entries;
         try {
-            entries = await fetchUsage(executable, {
+            entries = await fetchUsage(executable, cancellable, {
                 refresh: force,
-                cancellable,
                 subprocesses: this._subprocesses,
             });
         } catch (error) {

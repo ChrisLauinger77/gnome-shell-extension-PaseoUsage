@@ -22,7 +22,7 @@ export default class AdwPrefs extends ExtensionPreferences {
             statusRow.subtitle = _("Checking…");
             let status;
             try {
-                const version = await fetchVersion(executable, { cancellable, timeoutSeconds: 10 });
+                const version = await fetchVersion(executable, cancellable, { timeoutSeconds: 10 });
                 /* Translators: %s is the version of the paseo command line tool */
                 status = _("paseo %s found").format(version);
             } catch (error) {

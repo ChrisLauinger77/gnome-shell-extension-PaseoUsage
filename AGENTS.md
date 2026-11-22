@@ -113,6 +113,12 @@ Notes:
 - `paseo` is only ever run asynchronously through `lib/paseoClient.js`
   (`Gio.Subprocess` + `communicate_utf8_async`) with a timeout. Never use
   synchronous spawning in the shell process.
+- `fetchUsage()` and `fetchVersion()` take the `paseo-executable` setting
+  value and a required `Gio.Cancellable`; the generic runner is private, so
+  only `usage --json [--refresh]` and `--version` can be run. The per-call
+  timeout is removed in the cancellable's handler, synchronously inside
+  `cancel()`, so `disable()` leaves no timeout source behind (an
+  extensions.gnome.org review requirement).
 - `enable()` initializes settings, a `Gio.Cancellable`, the subprocess set and
   the indicator, starts an initial refresh from the Paseo daemon cache (no
   `--refresh`), and starts the refresh timer (`refresh-interval` minutes, 0 is
