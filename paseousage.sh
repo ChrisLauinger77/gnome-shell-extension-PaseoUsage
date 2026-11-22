@@ -126,6 +126,9 @@ case "${1:-}" in
     fi
     gnome-extensions upload --accept-tos --user ChrisLauinger77 --password-file /var/data/dev/ego_password "$extensionfile"
     ;;
+  test)
+    "$script_dir/tests/run.sh"
+    ;;
   translate)
     reffile=PaseoUsage.pot
     xgettext --from-code=UTF-8 --add-comments=Translators --output=po/"$reffile" "$extension"/*.js "$extension"/lib/*.js "$extension"/schemas/*.xml "$extension"/ui/*.ui
@@ -139,7 +142,7 @@ case "${1:-}" in
     echo "Done."
     ;;
   *)
-    echo "Usage: $0 {install-dependencies|zip|pack|install|translate|upload|cleanup|check-version|update-version|setup-hooks}"
+    echo "Usage: $0 {install-dependencies|zip|pack|install|translate|test|upload|cleanup|check-version|update-version|setup-hooks}"
     exit 1
     ;;
 esac
