@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 10:58+0100\n"
+"POT-Creation-Date: 2026-11-23 17:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,85 +134,97 @@ msgid "%s used"
 msgstr ""
 
 #: PaseoUsage@lauinger-clan.de/lib/format.js:159
-#: PaseoUsage@lauinger-clan.de/lib/format.js:160
-msgid "Session"
-msgstr ""
-
-#: PaseoUsage@lauinger-clan.de/lib/format.js:161
-msgid "Weekly"
+msgid "Extra usage"
 msgstr ""
 
 #: PaseoUsage@lauinger-clan.de/lib/format.js:162
-msgid "Monthly"
-msgstr ""
-
 #: PaseoUsage@lauinger-clan.de/lib/format.js:163
-msgid "Code review"
+msgid "Session"
 msgstr ""
 
 #: PaseoUsage@lauinger-clan.de/lib/format.js:164
-msgid "Credits"
+msgid "Weekly"
 msgstr ""
 
 #: PaseoUsage@lauinger-clan.de/lib/format.js:165
+msgid "Monthly"
+msgstr ""
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:166
+msgid "Code review"
+msgstr ""
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:167
+msgid "Credits"
+msgstr ""
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:168
 msgid "Monthly credits"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/format.js:175
+#: PaseoUsage@lauinger-clan.de/lib/format.js:179
+msgid "Disabled"
+msgstr ""
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:182
+msgid "Enabled"
+msgstr ""
+
+#: PaseoUsage@lauinger-clan.de/lib/format.js:190
 msgid "No quota available"
 msgstr ""
 
 #. Translators: %s is a command, e.g. "claude /login"
-#: PaseoUsage@lauinger-clan.de/lib/format.js:179
+#: PaseoUsage@lauinger-clan.de/lib/format.js:194
 #, javascript-format
 msgid "Run %s to refresh it."
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/format.js:180
+#: PaseoUsage@lauinger-clan.de/lib/format.js:195
 msgid "Sign in again."
 msgstr ""
 
 #. Translators: %s are an HTTP status code and a remedy sentence
-#: PaseoUsage@lauinger-clan.de/lib/format.js:183
+#: PaseoUsage@lauinger-clan.de/lib/format.js:198
 #, javascript-format
 msgid "Login rejected (HTTP %s). %s"
 msgstr ""
 
 #. Translators: %s is a remedy sentence
-#: PaseoUsage@lauinger-clan.de/lib/format.js:189
+#: PaseoUsage@lauinger-clan.de/lib/format.js:204
 #, javascript-format
 msgid "Login expired. %s"
 msgstr ""
 
 #. Translators: %s are a relative time ("5 minutes ago") and a remedy sentence
-#: PaseoUsage@lauinger-clan.de/lib/format.js:192
+#: PaseoUsage@lauinger-clan.de/lib/format.js:207
 #, javascript-format
 msgid "Login expired %s. %s"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/format.js:194
+#: PaseoUsage@lauinger-clan.de/lib/format.js:209
 msgid "Usage is unavailable"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/format.js:211
+#: PaseoUsage@lauinger-clan.de/lib/format.js:226
 msgid "Unknown error"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/format.js:238
+#: PaseoUsage@lauinger-clan.de/lib/format.js:253
 #, javascript-format
 msgid "Paseo executable not found or not executable: %s"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/format.js:241
+#: PaseoUsage@lauinger-clan.de/lib/format.js:256
 #, javascript-format
 msgid "paseo did not respond within %d seconds"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/format.js:244
+#: PaseoUsage@lauinger-clan.de/lib/format.js:259
 msgid "Unexpected output from paseo"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/format.js:247
+#: PaseoUsage@lauinger-clan.de/lib/format.js:262
 #, javascript-format
 msgid "paseo exited with status %d"
 msgstr ""
@@ -230,35 +242,35 @@ msgstr ""
 msgid "No usage data"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/usageView.js:142
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:143
 msgid "Usage"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/usageView.js:150
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:151
 #: PaseoUsage@lauinger-clan.de/ui/prefs.ui:74
 msgid "Refresh"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/usageView.js:160
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:161
 msgid "Settings"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/usageView.js:171
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:172
 msgid "Refreshing…"
 msgstr ""
 
 #. Translators: %s is a relative time, e.g. "5 minutes ago"
-#: PaseoUsage@lauinger-clan.de/lib/usageView.js:174
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:175
 #, javascript-format
 msgid "Last refresh: %s"
 msgstr ""
 
-#: PaseoUsage@lauinger-clan.de/lib/usageView.js:176
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:177
 msgid "No successful refresh"
 msgstr ""
 
 #. Translators: %s is a relative time, e.g. "2 hours ago"
-#: PaseoUsage@lauinger-clan.de/lib/usageView.js:237
+#: PaseoUsage@lauinger-clan.de/lib/usageView.js:238
 #, javascript-format
 msgid "Updated %s"
 msgstr ""

@@ -12,6 +12,7 @@ import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
 
 import {
+    displayDetailValue,
     displayLabel,
     formatAgo,
     formatBalance,
@@ -256,7 +257,7 @@ export const ProviderCard = GObject.registerClass(
                 card.add_child(
                     _valueRow(
                         displayLabel(detail),
-                        detail.value ?? "",
+                        displayDetailValue(detail),
                         "paseo-usage-detail-label",
                         `paseo-usage-detail-value ${toneClass(detail.tone)}`
                     )
