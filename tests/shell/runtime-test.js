@@ -111,6 +111,17 @@ function checkIconVisible(label) {
 const naturalWidth = () => T.indicator().get_preferred_width(-1)[1];
 
 async function main() {
+    const formatUri = Gio.File.new_for_path(`${T.extension().path}/lib/format.js`).get_uri();
+    const { displayLabel, displayDetailValue } = await import(formatUri);
+    const extraUsage = { id: "extra_usage", label: "Extra usage", value: "Disabled" };
+    T.check("extra usage label uses gettext", displayLabel(extraUsage) === T.extension().gettext("Extra usage"));
+    for (const value of ["Disabled", "Enabled"]) {
+        T.check(`${value} extra usage uses gettext`,
+            displayDetailValue({ ...extraUsage, value }) === T.extension().gettext(value));
+    }
+    T.check("unknown extra usage value preserved", displayDetailValue({ ...extraUsage, value: "$5" }) === "$5");
+    T.check("other detail values preserved", displayDetailValue({ label: "Custom", value: "Disabled" }) === "Disabled");
+
     let w = where();
     T.check("never chosen: no user value", settings().get_user_value("panel-position") === null);
     T.check(`never chosen: right box, index 0 (${w.text})`, w.name === "right" && w.index === 0);

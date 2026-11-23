@@ -155,6 +155,9 @@ export function formatBalance(balance) {
 
 // Paseo only sends English labels; translate the well known ones by id.
 export function displayLabel(item) {
+    if (item.label === "Extra usage") {
+        return _("Extra usage");
+    }
     const known = {
         session: ["Session", _("Session")],
         five_hour: ["Session", _("Session")],
@@ -168,6 +171,18 @@ export function displayLabel(item) {
         return known[1];
     }
     return item.label ?? "";
+}
+
+export function displayDetailValue(detail) {
+    if (detail.label === "Extra usage") {
+        if (detail.value === "Disabled") {
+            return _("Disabled");
+        }
+        if (detail.value === "Enabled") {
+            return _("Enabled");
+        }
+    }
+    return detail.value ?? "";
 }
 
 export function formatProblem(problem, now = Date.now()) {
