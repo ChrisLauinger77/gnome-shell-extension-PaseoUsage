@@ -1,6 +1,6 @@
 {
     "name": "gnome-shell-extension-paseousage",
-    "version": "51.1.0",
+    "version": "51.1.1",
     "description": "Gnome Shell Extension to visualize the plan usage reported by the Paseo command line tool",
     "main": "PaseoUsage@lauinger-clan.de/extension.js",
     "scripts": {
@@ -24,10 +24,10 @@
     "homepage": "https://github.com/ChrisLauinger77/gnome-shell-extension-PaseoUsage#readme",
     "devDependencies": {
         "@eslint/js": "^10.0.0",
-        "@microsoft/eslint-formatter-sarif": "3.1.0",
-        "eslint": "^10.0.0",
         "@girs/gjs": "latest",
         "@girs/gnome-shell": "latest",
+        "@microsoft/eslint-formatter-sarif": "3.1.0",
+        "eslint": "^10.0.0",
         "typescript": "latest"
     },
     "type": "module"
